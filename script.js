@@ -7,6 +7,7 @@ let users = []
 let skills = []
 let swapRequests = []
 let ratings = []
+let isDarkMode = false
 const locations = ["Remote", "New York", "London", "Tokyo", "Berlin", "Sydney", "Paris"]
 const popularSkills = [
   "Graphic Design",
@@ -43,6 +44,8 @@ const modals = {
   signup: document.getElementById("signup-modal"),
   swap: document.getElementById("swap-modal"),
   rating: document.getElementById("rating-modal"),
+  forgotPassword: document.getElementById("forgot-password-modal"),
+  editProfile: document.getElementById("edit-profile-modal"),
 }
 
 // Initialize the application
@@ -64,7 +67,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show floating skills animation on first visit
   showFloatingSkills()
+
+  // Initialize theme
+  initializeTheme()
 })
+
+// Theme Management
+function initializeTheme() {
+  // Check for saved theme preference or default to light mode
+  const savedTheme = localStorage.getItem("theme") || "light"
+  isDarkMode = savedTheme === "dark"
+  applyTheme()
+}
+
+function toggleTheme() {
+  isDarkMode = !isDarkMode
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light")
+  applyTheme()
+}
+
+function applyTheme() {
+  const body = document.body
+  const themeIcon = document.getElementById("theme-icon")
+
+  if (isDarkMode) {
+    body.setAttribute("data-theme", "dark")
+    if (themeIcon) themeIcon.className = "fas fa-sun"
+  } else {
+    body.removeAttribute("data-theme")
+    if (themeIcon) themeIcon.className = "fas fa-moon"
+  }
+}
 
 // Show floating skills animation
 function showFloatingSkills() {
@@ -196,67 +229,275 @@ function validateSignupForm() {
 
 // Load sample data for demonstration
 function loadSampleData() {
-  // Sample users
+  // Extended list of real names for more users
+  const realNames = [
+    "James Wilson",
+    "Jay Parker",
+    "Jack Thompson",
+    "Jalisa Rodriguez",
+    "Jennifer Chen",
+    "John Martinez",
+    "Jessica Taylor",
+    "Jordan Brown",
+    "Julia Davis",
+    "Justin Lee",
+    "Amanda Johnson",
+    "Andrew Miller",
+    "Anna Garcia",
+    "Anthony White",
+    "Ashley Lopez",
+    "Brandon Clark",
+    "Brittany Hall",
+    "Brian Young",
+    "Brooke Allen",
+    "Carlos King",
+    "Catherine Wright",
+    "Christopher Green",
+    "Christina Adams",
+    "Daniel Baker",
+    "Diana Nelson",
+    "David Carter",
+    "Emily Mitchell",
+    "Emma Perez",
+    "Eric Roberts",
+    "Hannah Turner",
+    "Isabella Phillips",
+    "Jacob Campbell",
+    "Jasmine Parker",
+    "Kevin Evans",
+    "Lauren Edwards",
+    "Madison Collins",
+    "Matthew Stewart",
+    "Megan Morris",
+    "Michael Rogers",
+    "Michelle Reed",
+    "Nicholas Cook",
+    "Olivia Bailey",
+    "Rachel Cooper",
+    "Ryan Richardson",
+    "Samantha Cox",
+    "Sarah Ward",
+    "Steven Torres",
+    "Taylor Peterson",
+    "Tyler Gray",
+    "Victoria Ramirez",
+    "William Johnson",
+    "Zoe Anderson",
+    "Alexander Brown",
+    "Sophia Miller",
+    "Benjamin Davis",
+    "Charlotte Wilson",
+    "Lucas Garcia",
+    "Amelia Martinez",
+    "Mason Rodriguez",
+    "Harper Lewis",
+    "Ethan Walker",
+    "Evelyn Hall",
+    "Sebastian Allen",
+    "Abigail Young",
+    "Henry King",
+    "Emily Wright",
+    "Jackson Lopez",
+    "Elizabeth Hill",
+    "Aiden Scott",
+    "Sofia Green",
+    "Matthew Adams",
+    "Avery Baker",
+    "Samuel Nelson",
+    "Ella Carter",
+    "Joseph Mitchell",
+    "Scarlett Perez",
+    "David Roberts",
+    "Grace Turner",
+    "Carter Phillips",
+    "Chloe Campbell",
+    "Wyatt Parker",
+    "Layla Evans",
+    "John Edwards",
+    "Aria Collins",
+    "Owen Stewart",
+    "Ellie Morris",
+    "Luke Rogers",
+    "Nora Reed",
+    "Levi Cook",
+    "Hazel Bailey",
+    "Isaac Cooper",
+    "Violet Richardson",
+    "Oliver Cox",
+    "Aurora Ward",
+    "Eli Torres",
+    "Savannah Peterson",
+    "Josiah Gray",
+    "Audrey Ramirez",
+    "Lincoln Wood",
+    "Bella Watson",
+    "Mason Brooks",
+    "Claire Kelly",
+    "Noah Sanders",
+    "Skylar Price",
+    "Caleb Bennett",
+    "Leah Powell",
+    "Ryan Long",
+    "Natalie Patterson",
+    "Nathan Hughes",
+    "Addison Flores",
+    "Ian Washington",
+    "Lillian Butler",
+    "Christian Simmons",
+    "Maya Foster",
+    "Hunter Gonzales",
+    "Penelope Bryant",
+    "Connor Alexander",
+    "Samantha Russell",
+    "Jeremiah Griffin",
+    "Aaliyah Diaz",
+  ]
+
+  // Sample users with the first few having specific data
   users = [
     {
       id: 1,
-      name: "John Doe",
-      email: "john@example.com",
+      name: "James Wilson",
+      email: "james.wilson@example.com",
       password: "password123",
       location: "New York",
+      bio: "Passionate web developer with 5 years of experience. Love teaching and learning new technologies.",
       profilePhoto: "https://randomuser.me/api/portraits/men/32.jpg",
       isPublic: true,
-      offeredSkills: ["Web Development", "JavaScript", "React"],
-      wantedSkills: ["Graphic Design", "Photography"],
+      offeredSkills: ["Web Development", "JavaScript", "React", "Node.js"],
+      wantedSkills: ["Graphic Design", "Photography", "UI/UX Design"],
       availability: ["weekends", "evenings"],
       isAdmin: false,
     },
     {
       id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
+      name: "Jay Parker",
+      email: "jay.parker@example.com",
       password: "password123",
       location: "London",
-      profilePhoto: "https://randomuser.me/api/portraits/women/44.jpg",
+      bio: "Creative designer who loves bringing ideas to life through visual storytelling.",
+      profilePhoto: "https://randomuser.me/api/portraits/men/44.jpg",
       isPublic: true,
-      offeredSkills: ["Graphic Design", "Photoshop", "Illustrator"],
-      wantedSkills: ["Web Development", "Spanish"],
+      offeredSkills: ["Graphic Design", "Photoshop", "Illustrator", "Branding"],
+      wantedSkills: ["Web Development", "Spanish", "Animation"],
       availability: ["weekdays", "evenings"],
       isAdmin: false,
     },
     {
       id: 3,
+      name: "Jack Thompson",
+      email: "jack.thompson@example.com",
+      password: "password123",
+      location: "Remote",
+      bio: "Full-stack developer and tech enthusiast. Always eager to share knowledge.",
+      profilePhoto: "https://randomuser.me/api/portraits/men/75.jpg",
+      isPublic: true,
+      offeredSkills: ["Node.js", "Python", "Database Design", "DevOps"],
+      wantedSkills: ["Machine Learning", "Data Science", "Mobile Development"],
+      availability: ["weekdays"],
+      isAdmin: false,
+    },
+    {
+      id: 4,
+      name: "Jalisa Rodriguez",
+      email: "jalisa.rodriguez@example.com",
+      password: "password123",
+      location: "Los Angeles",
+      bio: "Digital marketing specialist and content creator with a passion for storytelling.",
+      profilePhoto: "https://randomuser.me/api/portraits/women/68.jpg",
+      isPublic: true,
+      offeredSkills: ["Digital Marketing", "Content Writing", "Social Media", "SEO"],
+      wantedSkills: ["Video Editing", "Photography", "Graphic Design"],
+      availability: ["weekends", "evenings"],
+      isAdmin: false,
+    },
+    {
+      id: 5,
       name: "Admin User",
       email: "admin@example.com",
       password: "admin123",
       location: "Remote",
-      profilePhoto: "https://randomuser.me/api/portraits/men/75.jpg",
+      bio: "Platform administrator and project manager.",
+      profilePhoto: "https://randomuser.me/api/portraits/men/15.jpg",
       isPublic: false,
-      offeredSkills: ["Project Management", "Coaching"],
+      offeredSkills: ["Project Management", "Coaching", "Leadership"],
       wantedSkills: ["Data Analysis", "Machine Learning"],
       availability: ["weekdays"],
       isAdmin: true,
     },
   ]
 
-  // Generate more sample users
-  for (let i = 4; i <= 20; i++) {
+  // Helper function to get random skills
+  function getRandomSkills(min, max) {
+    const numSkills = Math.floor(Math.random() * (max - min + 1)) + min
+    const selectedSkills = []
+    const availableSkills = [
+      ...popularSkills,
+      "Mobile Development",
+      "Data Science",
+      "Machine Learning",
+      "UI/UX Design",
+      "Animation",
+      "Video Editing",
+      "SEO",
+      "Content Writing",
+      "Branding",
+      "DevOps",
+      "Cloud Computing",
+      "Cybersecurity",
+      "Game Development",
+      "3D Modeling",
+      "Music Production",
+      "Language Teaching",
+      "Fitness Training",
+      "Public Speaking",
+      "Project Management",
+      "Leadership",
+    ]
+
+    for (let i = 0; i < numSkills; i++) {
+      const randomIndex = Math.floor(Math.random() * availableSkills.length)
+      selectedSkills.push(availableSkills[randomIndex])
+      availableSkills.splice(randomIndex, 1)
+    }
+    return selectedSkills
+  }
+
+  // Helper function to get random availability
+  function getRandomAvailability() {
+    const availabilityOptions = ["weekdays", "weekends", "evenings"]
+    const selectedAvailability = []
+    for (let i = 0; i < availabilityOptions.length; i++) {
+      if (Math.random() > 0.4) {
+        selectedAvailability.push(availabilityOptions[i])
+      }
+    }
+    return selectedAvailability.length > 0 ? selectedAvailability : ["weekends"]
+  }
+
+  // Generate users for all names (100+ users)
+  for (let i = 5; i < realNames.length; i++) {
+    const isWoman = Math.random() > 0.5
+    const firstName = realNames[i].split(" ")[0]
+    const lastName = realNames[i].split(" ")[1]
+
     users.push({
-      id: i,
-      name: `User ${i}`,
-      email: `user${i}@example.com`,
-      password: `password${i}`,
+      id: i + 1,
+      name: realNames[i],
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
+      password: `password${i + 1}`,
       location: locations[Math.floor(Math.random() * locations.length)],
-      profilePhoto: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? "men" : "women"}/${Math.floor(Math.random() * 100)}.jpg`,
-      isPublic: Math.random() > 0.3,
-      offeredSkills: getRandomSkills(2, 4),
+      bio: `Hi, I'm ${firstName} and I love learning and sharing new skills! I believe in the power of knowledge exchange and community building.`,
+      profilePhoto: `https://randomuser.me/api/portraits/${isWoman ? "women" : "men"}/${Math.floor(Math.random() * 100)}.jpg`,
+      isPublic: Math.random() > 0.15, // 85% public profiles
+      offeredSkills: getRandomSkills(2, 5),
       wantedSkills: getRandomSkills(2, 4),
       availability: getRandomAvailability(),
       isAdmin: false,
     })
   }
 
-  // Sample swap requests
+  // Keep existing swap requests and ratings...
   swapRequests = [
     {
       id: 1,
@@ -291,7 +532,6 @@ function loadSampleData() {
     },
   ]
 
-  // Sample ratings
   ratings = [
     {
       id: 1,
@@ -322,23 +562,317 @@ function loadSampleData() {
   skills = Array.from(allSkills)
 }
 
-// Helper function to get random skills
-function getRandomSkills(min, max) {
-  const count = Math.floor(Math.random() * (max - min + 1)) + min
-  const shuffled = [...popularSkills].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, count)
+// Add search dropdown functionality
+let searchTimeout
+let currentSearchIndex = -1
+let isSearching = false
+
+function setupSearchDropdown() {
+  const searchInput = document.getElementById("skill-search")
+  const searchDropdown = document.getElementById("search-dropdown")
+
+  if (!searchInput || !searchDropdown) return
+
+  searchInput.addEventListener("input", handleSearchInput)
+  searchInput.addEventListener("keydown", handleSearchKeydown)
+  searchInput.addEventListener("focus", handleSearchFocus)
+  searchInput.addEventListener("blur", handleSearchBlur)
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-input-container")) {
+      hideSearchDropdown()
+    }
+  })
 }
 
-// Helper function to get random availability
-function getRandomAvailability() {
-  const options = ["weekends", "evenings", "weekdays"]
-  const count = Math.floor(Math.random() * 3) + 1
-  const shuffled = [...options].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, count)
+function handleSearchInput(e) {
+  const query = e.target.value.trim()
+
+  clearTimeout(searchTimeout)
+
+  if (query.length === 0) {
+    hideSearchDropdown()
+    return
+  }
+
+  if (query.length >= 1) {
+    isSearching = true
+    showSearchLoading()
+
+    searchTimeout = setTimeout(() => {
+      showSearchResults(query)
+      isSearching = false
+    }, 200)
+  }
+}
+
+function handleSearchKeydown(e) {
+  const dropdown = document.getElementById("search-dropdown")
+  const items = dropdown.querySelectorAll(".search-dropdown-item")
+
+  if (!dropdown.classList.contains("show") || items.length === 0) {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      renderBrowseView()
+    }
+    return
+  }
+
+  switch (e.key) {
+    case "ArrowDown":
+      e.preventDefault()
+      currentSearchIndex = Math.min(currentSearchIndex + 1, items.length - 1)
+      updateSearchHighlight(items)
+      break
+    case "ArrowUp":
+      e.preventDefault()
+      currentSearchIndex = Math.max(currentSearchIndex - 1, -1)
+      updateSearchHighlight(items)
+      break
+    case "Enter":
+      e.preventDefault()
+      if (currentSearchIndex >= 0 && items[currentSearchIndex]) {
+        items[currentSearchIndex].click()
+      } else {
+        hideSearchDropdown()
+        renderBrowseView()
+      }
+      break
+    case "Escape":
+      hideSearchDropdown()
+      e.target.blur()
+      break
+  }
+}
+
+function handleSearchFocus(e) {
+  const query = e.target.value.trim()
+  if (query.length >= 1 && !isSearching) {
+    showSearchResults(query)
+  }
+}
+
+function handleSearchBlur(e) {
+  // Delay hiding to allow clicks on dropdown items
+  setTimeout(() => {
+    if (!document.querySelector(".search-dropdown:hover")) {
+      hideSearchDropdown()
+    }
+  }, 150)
+}
+
+function showSearchLoading() {
+  const dropdown = document.getElementById("search-dropdown")
+  if (!dropdown) return
+
+  dropdown.innerHTML = `
+    <div class="search-loading">
+      <i class="fas fa-spinner fa-spin"></i> Searching...
+    </div>
+  `
+  dropdown.classList.add("show")
+}
+
+function showSearchResults(query) {
+  const dropdown = document.getElementById("search-dropdown")
+  if (!dropdown) return
+
+  const lowerQuery = query.toLowerCase()
+
+  // Enhanced user search with better matching
+  const matchingUsers = users
+    .filter((user) => {
+      if (!user.isPublic || (currentUser && user.id === currentUser.id)) return false
+
+      const nameMatch = user.name.toLowerCase().includes(lowerQuery)
+      const skillMatch = [...user.offeredSkills, ...user.wantedSkills].some((skill) =>
+        skill.toLowerCase().includes(lowerQuery),
+      )
+      const locationMatch = user.location && user.location.toLowerCase().includes(lowerQuery)
+      const bioMatch = user.bio && user.bio.toLowerCase().includes(lowerQuery)
+
+      return nameMatch || skillMatch || locationMatch || bioMatch
+    })
+    .sort((a, b) => {
+      // Prioritize exact name matches
+      const aNameMatch = a.name.toLowerCase().startsWith(lowerQuery)
+      const bNameMatch = b.name.toLowerCase().startsWith(lowerQuery)
+      if (aNameMatch && !bNameMatch) return -1
+      if (!aNameMatch && bNameMatch) return 1
+      return 0
+    })
+    .slice(0, 8)
+
+  // Enhanced skill search
+  const matchingSkills = skills
+    .filter((skill) => skill.toLowerCase().includes(lowerQuery))
+    .sort((a, b) => {
+      // Prioritize exact matches and starts-with matches
+      const aExact = a.toLowerCase() === lowerQuery
+      const bExact = b.toLowerCase() === lowerQuery
+      if (aExact && !bExact) return -1
+      if (!aExact && bExact) return 1
+
+      const aStarts = a.toLowerCase().startsWith(lowerQuery)
+      const bStarts = b.toLowerCase().startsWith(lowerQuery)
+      if (aStarts && !bStarts) return -1
+      if (!aStarts && bStarts) return 1
+
+      return a.localeCompare(b)
+    })
+    .slice(0, 6)
+
+  let html = ""
+
+  // Users section
+  if (matchingUsers.length > 0) {
+    html += `
+      <div class="search-dropdown-section">
+        <div class="search-dropdown-header">
+          <i class="fas fa-users"></i> People (${matchingUsers.length})
+        </div>
+    `
+
+    matchingUsers.forEach((user) => {
+      const matchingSkills = [...user.offeredSkills, ...user.wantedSkills]
+        .filter((skill) => skill.toLowerCase().includes(lowerQuery))
+        .slice(0, 2)
+
+      html += `
+        <div class="search-dropdown-item" data-type="user" data-id="${user.id}">
+          <img src="${user.profilePhoto}" alt="${user.name}" class="search-dropdown-avatar">
+          <div class="search-dropdown-info">
+            <div class="search-dropdown-name">${highlightMatch(user.name, query)}</div>
+            <div class="search-dropdown-meta">
+              <div class="search-dropdown-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${user.location || "Remote"}</span>
+              </div>
+              ${matchingSkills
+                .map((skill) => `<span class="search-dropdown-skill">${highlightMatch(skill, query)}</span>`)
+                .join("")}
+            </div>
+          </div>
+        </div>
+      `
+    })
+
+    html += "</div>"
+  }
+
+  // Skills section
+  if (matchingSkills.length > 0) {
+    html += `
+      <div class="search-dropdown-section">
+        <div class="search-dropdown-header">
+          <i class="fas fa-star"></i> Skills (${matchingSkills.length})
+        </div>
+    `
+
+    matchingSkills.forEach((skill) => {
+      const userCount = users.filter(
+        (u) => u.isPublic && (u.offeredSkills.includes(skill) || u.wantedSkills.includes(skill)),
+      ).length
+
+      html += `
+        <div class="search-dropdown-item" data-type="skill" data-value="${skill}">
+          <div class="search-dropdown-avatar" style="background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.8rem;">
+            ${skill.charAt(0)}
+          </div>
+          <div class="search-dropdown-info">
+            <div class="search-dropdown-name">${highlightMatch(skill, query)}</div>
+            <div class="search-dropdown-meta">
+              <span>${userCount} ${userCount === 1 ? "person" : "people"}</span>
+            </div>
+          </div>
+        </div>
+      `
+    })
+
+    html += "</div>"
+  }
+
+  if (html === "") {
+    html = `
+      <div class="search-no-results">
+        <i class="fas fa-search"></i>
+        <p>No results found for "${query}"</p>
+        <small>Try searching for skills, names, or locations</small>
+      </div>
+    `
+  }
+
+  dropdown.innerHTML = html
+  dropdown.classList.add("show")
+  currentSearchIndex = -1
+
+  // Add click handlers
+  dropdown.querySelectorAll(".search-dropdown-item").forEach((item) => {
+    item.addEventListener("click", handleSearchItemClick)
+  })
+}
+
+function handleSearchItemClick(e) {
+  const item = e.currentTarget
+  const type = item.getAttribute("data-type")
+  const searchInput = document.getElementById("skill-search")
+
+  if (type === "user") {
+    const userId = item.getAttribute("data-id")
+    const user = users.find((u) => u.id === Number.parseInt(userId))
+    if (user) {
+      searchInput.value = user.name
+      hideSearchDropdown()
+      showView("browse")
+      renderBrowseView()
+    }
+  } else if (type === "skill") {
+    const skill = item.getAttribute("data-value")
+    searchInput.value = skill
+    hideSearchDropdown()
+    showView("browse")
+    renderBrowseView()
+  }
+}
+
+function updateSearchHighlight(items) {
+  items.forEach((item, index) => {
+    if (index === currentSearchIndex) {
+      item.classList.add("highlighted")
+      item.scrollIntoView({ block: "nearest" })
+    } else {
+      item.classList.remove("highlighted")
+    }
+  })
+}
+
+function hideSearchDropdown() {
+  const dropdown = document.getElementById("search-dropdown")
+  if (dropdown) {
+    dropdown.classList.remove("show")
+    currentSearchIndex = -1
+  }
+}
+
+function highlightMatch(text, query) {
+  if (!query) return text
+
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi")
+  return text.replace(
+    regex,
+    '<strong style="color: var(--primary); background: rgba(67, 97, 238, 0.1); padding: 0.1rem 0.2rem; border-radius: 3px;">$1</strong>',
+  )
 }
 
 // Set up all event listeners
 function setupEventListeners() {
+  // Theme toggle
+  const themeToggleBtn = document.getElementById("theme-toggle-btn")
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", toggleTheme)
+  }
+
   // Navigation links
   if (navLinks.home) {
     navLinks.home.addEventListener("click", (e) => {
@@ -358,6 +892,10 @@ function setupEventListeners() {
   if (navLinks.swaps) {
     navLinks.swaps.addEventListener("click", (e) => {
       e.preventDefault()
+      if (!currentUser) {
+        openModal("login")
+        return
+      }
       showView("swaps")
       renderSwapsView()
     })
@@ -366,6 +904,10 @@ function setupEventListeners() {
   if (navLinks.profile) {
     navLinks.profile.addEventListener("click", (e) => {
       e.preventDefault()
+      if (!currentUser) {
+        openModal("login")
+        return
+      }
       showView("profile")
       renderProfileView()
     })
@@ -391,6 +933,12 @@ function setupEventListeners() {
         openModal("login")
       }
     })
+  }
+
+  // Logout button
+  const logoutBtn = document.getElementById("logout-btn")
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogout)
   }
 
   // Auth buttons
@@ -446,6 +994,49 @@ function setupEventListeners() {
       e.preventDefault()
       closeAllModals()
       openModal("login")
+    })
+  }
+
+  // Forgot password functionality
+  const forgotPasswordLink = document.getElementById("forgot-password-link")
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener("click", (e) => {
+      e.preventDefault()
+      closeAllModals()
+      openModal("forgotPassword")
+    })
+  }
+
+  const forgotPasswordForm = document.getElementById("forgot-password-form")
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", handleForgotPassword)
+  }
+
+  const backToLoginLink = document.getElementById("back-to-login-link")
+  if (backToLoginLink) {
+    backToLoginLink.addEventListener("click", (e) => {
+      e.preventDefault()
+      closeAllModals()
+      openModal("login")
+    })
+  }
+
+  // Edit profile functionality
+  const editProfileBtn = document.getElementById("edit-profile-btn")
+  if (editProfileBtn) {
+    editProfileBtn.addEventListener("click", openEditProfileModal)
+  }
+
+  const editProfileForm = document.getElementById("edit-profile-form")
+  if (editProfileForm) {
+    editProfileForm.addEventListener("submit", handleEditProfile)
+  }
+
+  const cancelEditProfile = document.getElementById("cancel-edit-profile")
+  if (cancelEditProfile) {
+    cancelEditProfile.addEventListener("click", (e) => {
+      e.preventDefault()
+      closeAllModals()
     })
   }
 
@@ -556,6 +1147,9 @@ function setupEventListeners() {
       checkbox.addEventListener("change", updateAvailability)
     }
   })
+
+  // Setup search dropdown
+  setupSearchDropdown()
 }
 
 // View management
@@ -608,12 +1202,14 @@ function checkLoginStatus() {
 function updateAuthUI() {
   const loginBtn = document.getElementById("login-btn")
   const signupBtn = document.getElementById("signup-btn")
+  const logoutBtn = document.getElementById("logout-btn")
   const userProfileBtn = document.getElementById("user-profile-btn")
   const navAdmin = document.getElementById("nav-admin")
 
   if (currentUser) {
     if (loginBtn) loginBtn.style.display = "none"
     if (signupBtn) signupBtn.style.display = "none"
+    if (logoutBtn) logoutBtn.style.display = "inline-flex"
     if (userProfileBtn) {
       userProfileBtn.style.display = "block"
       const img = userProfileBtn.querySelector("img")
@@ -631,8 +1227,9 @@ function updateAuthUI() {
       isAdmin = false
     }
   } else {
-    if (loginBtn) loginBtn.style.display = "inline-block"
-    if (signupBtn) signupBtn.style.display = "inline-block"
+    if (loginBtn) loginBtn.style.display = "inline-flex"
+    if (signupBtn) signupBtn.style.display = "inline-flex"
+    if (logoutBtn) logoutBtn.style.display = "none"
     if (userProfileBtn) userProfileBtn.style.display = "none"
     if (navAdmin) navAdmin.style.display = "none"
     isAdmin = false
@@ -695,6 +1292,7 @@ function handleSignup(e) {
     email,
     password,
     location: "",
+    bio: "",
     profilePhoto: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
     isPublic: false,
     offeredSkills: [],
@@ -710,6 +1308,119 @@ function handleSignup(e) {
   showView("profile")
   renderProfileView()
   showToast("Account created successfully!", "success")
+}
+
+function handleLogout() {
+  currentUser = null
+  updateAuthUI()
+  showView("home")
+  renderHomeView()
+  showToast("Logged out successfully", "info")
+}
+
+function handleForgotPassword(e) {
+  e.preventDefault()
+
+  const emailInput = document.getElementById("forgot-email")
+  if (!emailInput) return
+
+  const email = emailInput.value.trim()
+
+  // Reset error
+  const emailError = document.getElementById("forgot-email-error")
+  if (emailError) emailError.style.display = "none"
+
+  // Validate email
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (emailError) emailError.style.display = "block"
+    return
+  }
+
+  // Check if user exists
+  const user = users.find((u) => u.email === email)
+
+  if (user) {
+    // In a real app, this would send an actual email
+    showToast("Password reset link sent to your email!", "success")
+
+    // For demo purposes, show the temporary password
+    setTimeout(() => {
+      showToast(`Demo: Your temporary password is "temp123" for ${email}`, "info")
+    }, 2000)
+  } else {
+    showToast("No account found with this email address", "error")
+  }
+
+  closeAllModals()
+}
+
+// Edit Profile functionality
+function openEditProfileModal() {
+  if (!currentUser) return
+
+  // Populate form with current user data
+  const editName = document.getElementById("edit-name")
+  const editEmail = document.getElementById("edit-email")
+  const editLocation = document.getElementById("edit-location")
+  const editBio = document.getElementById("edit-bio")
+
+  if (editName) editName.value = currentUser.name
+  if (editEmail) editEmail.value = currentUser.email
+  if (editLocation) editLocation.value = currentUser.location || ""
+  if (editBio) editBio.value = currentUser.bio || ""
+
+  openModal("editProfile")
+}
+
+function handleEditProfile(e) {
+  e.preventDefault()
+
+  if (!currentUser) return
+
+  const editName = document.getElementById("edit-name")
+  const editEmail = document.getElementById("edit-email")
+  const editLocation = document.getElementById("edit-location")
+  const editBio = document.getElementById("edit-bio")
+
+  if (!editName || !editEmail) return
+
+  const name = editName.value.trim()
+  const email = editEmail.value.trim()
+  const location = editLocation ? editLocation.value.trim() : ""
+  const bio = editBio ? editBio.value.trim() : ""
+
+  // Validate
+  if (!name || !email) {
+    showToast("Name and email are required", "error")
+    return
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast("Please enter a valid email", "error")
+    return
+  }
+
+  // Check if email is already in use by another user
+  if (users.some((u) => u.email === email && u.id !== currentUser.id)) {
+    showToast("Email already in use by another user", "error")
+    return
+  }
+
+  // Update user
+  currentUser.name = name
+  currentUser.email = email
+  currentUser.location = location
+  currentUser.bio = bio
+
+  // Update in users array
+  const userIndex = users.findIndex((u) => u.id === currentUser.id)
+  if (userIndex !== -1) {
+    users[userIndex] = currentUser
+  }
+
+  closeAllModals()
+  renderProfileView()
+  showToast("Profile updated successfully!", "success")
 }
 
 // Profile view functions
@@ -813,7 +1524,7 @@ function removeSkill(containerId, skill) {
   }
 
   renderProfileView()
-  showToast("Skill added!", "success")
+  showToast("Skill removed!", "success")
 }
 
 function toggleProfileStatus() {
@@ -1002,6 +1713,10 @@ function getSkillIcon(skill) {
 }
 
 // Browse view functions
+let currentPage = 1
+const itemsPerPage = 12
+let totalFilteredUsers = []
+
 function renderBrowseView() {
   const skillSearch = document.getElementById("skill-search")
   const locationFilter = document.getElementById("location-filter")
@@ -1011,29 +1726,31 @@ function renderBrowseView() {
   const locationFilterValue = locationFilter ? locationFilter.value : ""
   const availabilityFilterValue = availabilityFilter ? availabilityFilter.value : ""
 
-  // Filter users
-  const filteredUsers = users.filter((user) => {
-    // Skip private profiles and current user
+  // Filter users with enhanced search
+  totalFilteredUsers = users.filter((user) => {
     if (!user.isPublic || (currentUser && user.id === currentUser.id)) return false
 
-    // Apply search filter
+    // Enhanced search logic
     if (searchTerm) {
-      const hasSkill = [...user.offeredSkills, ...user.wantedSkills].some((skill) =>
+      const nameMatch = user.name.toLowerCase().includes(searchTerm)
+      const skillMatch = [...user.offeredSkills, ...user.wantedSkills].some((skill) =>
         skill.toLowerCase().includes(searchTerm),
       )
-      if (!hasSkill) return false
+      const locationMatch = user.location && user.location.toLowerCase().includes(searchTerm)
+      const bioMatch = user.bio && user.bio.toLowerCase().includes(searchTerm)
+
+      if (!nameMatch && !skillMatch && !locationMatch && !bioMatch) return false
     }
 
-    // Apply location filter
+    // Location filter
     if (locationFilterValue && locationFilterValue !== "remote" && user.location !== locationFilterValue) {
       return false
     }
-
     if (locationFilterValue === "remote" && user.location.toLowerCase() !== "remote") {
       return false
     }
 
-    // Apply availability filter
+    // Availability filter
     if (availabilityFilterValue && !user.availability.includes(availabilityFilterValue)) {
       return false
     }
@@ -1041,10 +1758,27 @@ function renderBrowseView() {
     return true
   })
 
+  // Sort results for better relevance
+  if (searchTerm) {
+    totalFilteredUsers.sort((a, b) => {
+      const aNameMatch = a.name.toLowerCase().includes(searchTerm)
+      const bNameMatch = b.name.toLowerCase().includes(searchTerm)
+      if (aNameMatch && !bNameMatch) return -1
+      if (!aNameMatch && bNameMatch) return 1
+      return 0
+    })
+  }
+
+  // Calculate pagination
+  const totalPages = Math.ceil(totalFilteredUsers.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentPageUsers = totalFilteredUsers.slice(startIndex, endIndex)
+
   // Update results count
   const resultsCount = document.getElementById("results-count")
   if (resultsCount) {
-    resultsCount.textContent = filteredUsers.length
+    resultsCount.textContent = totalFilteredUsers.length
   }
 
   // Render results
@@ -1053,41 +1787,68 @@ function renderBrowseView() {
 
   container.innerHTML = ""
 
-  if (filteredUsers.length === 0) {
-    container.innerHTML = '<p class="no-results">No users found matching your criteria</p>'
+  if (totalFilteredUsers.length === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        <i class="fas fa-search" style="font-size: 3rem; color: var(--gray); margin-bottom: 1rem;"></i>
+        <h3>No users found</h3>
+        <p>Try adjusting your search criteria or filters</p>
+        <button class="btn btn-outline" onclick="resetFiltersHandler()">Reset Filters</button>
+      </div>
+    `
     return
   }
 
-  filteredUsers.forEach((user) => {
+  currentPageUsers.forEach((user) => {
     const userCard = document.createElement("div")
     userCard.className = "user-card"
     userCard.innerHTML = `
-            <div class="user-card-header">
-                <img src="${user.profilePhoto}" alt="${user.name}" class="user-card-pic">
-                <div class="user-card-info">
-                    <h3>${user.name}</h3>
-                    <div class="user-card-location">
-                        <i class="fas fa-map-marker-alt"></i> ${user.location || "Location not specified"}
-                    </div>
-                </div>
-            </div>
-            <div class="user-card-body">
-                <div class="user-card-skills">
-                    <h4>Offers:</h4>
-                    ${user.offeredSkills.map((skill) => `<span class="skill-tag offer">${skill}</span>`).join("")}
-                    <h4>Wants:</h4>
-                    ${user.wantedSkills.map((skill) => `<span class="skill-tag want">${skill}</span>`).join("")}
-                </div>
-            </div>
-            <div class="user-card-footer">
-                <div class="availability-badge">
-                    <i class="fas fa-clock"></i> ${user.availability.join(", ") || "Not specified"}
-                </div>
-                <button class="btn btn-primary btn-small request-swap-btn" data-user-id="${user.id}">Request Swap</button>
-            </div>
-        `
+      <div class="user-card-header">
+        <img src="${user.profilePhoto}" alt="${user.name}" class="user-card-pic">
+        <div class="user-card-info">
+          <h3>${user.name}</h3>
+          <div class="user-card-location">
+            <i class="fas fa-map-marker-alt"></i> ${user.location || "Location not specified"}
+          </div>
+        </div>
+      </div>
+      <div class="user-card-body">
+        <div class="user-card-bio">
+          <p>${user.bio ? user.bio.substring(0, 100) + (user.bio.length > 100 ? "..." : "") : "No bio available"}</p>
+        </div>
+        <div class="user-card-skills">
+          <h4>Offers:</h4>
+          <div class="skills-container">
+            ${user.offeredSkills
+              .slice(0, 3)
+              .map((skill) => `<span class="skill-tag offer">${skill}</span>`)
+              .join("")}
+            ${user.offeredSkills.length > 3 ? `<span class="skill-tag more">+${user.offeredSkills.length - 3} more</span>` : ""}
+          </div>
+          <h4>Wants:</h4>
+          <div class="skills-container">
+            ${user.wantedSkills
+              .slice(0, 3)
+              .map((skill) => `<span class="skill-tag want">${skill}</span>`)
+              .join("")}
+            ${user.wantedSkills.length > 3 ? `<span class="skill-tag more">+${user.wantedSkills.length - 3} more</span>` : ""}
+          </div>
+        </div>
+      </div>
+      <div class="user-card-footer">
+        <div class="availability-badge">
+          <i class="fas fa-clock"></i> ${user.availability.join(", ") || "Not specified"}
+        </div>
+        <button class="btn btn-primary btn-small request-swap-btn" data-user-id="${user.id}">
+          <i class="fas fa-handshake"></i> Request Swap
+        </button>
+      </div>
+    `
     container.appendChild(userCard)
   })
+
+  // Render pagination
+  renderPagination(totalPages)
 
   // Add event listeners to swap buttons
   document.querySelectorAll(".request-swap-btn").forEach((btn) => {
@@ -1096,6 +1857,116 @@ function renderBrowseView() {
       openSwapModal(userId)
     })
   })
+}
+
+function renderPagination(totalPages) {
+  const paginationContainer = document.querySelector(".pagination")
+  if (!paginationContainer) return
+
+  if (totalPages <= 1) {
+    paginationContainer.style.display = "none"
+    return
+  }
+
+  paginationContainer.style.display = "flex"
+  paginationContainer.innerHTML = ""
+
+  // Previous button
+  const prevBtn = document.createElement("button")
+  prevBtn.className = `btn btn-outline pagination-btn ${currentPage === 1 ? "disabled" : ""}`
+  prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Previous'
+  prevBtn.disabled = currentPage === 1
+  prevBtn.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--
+      renderBrowseView()
+      scrollToTop()
+    }
+  })
+  paginationContainer.appendChild(prevBtn)
+
+  // Page numbers
+  const pageNumbers = generatePageNumbers(currentPage, totalPages)
+  pageNumbers.forEach((pageNum) => {
+    if (pageNum === "...") {
+      const ellipsis = document.createElement("span")
+      ellipsis.className = "pagination-ellipsis"
+      ellipsis.textContent = "..."
+      paginationContainer.appendChild(ellipsis)
+    } else {
+      const pageBtn = document.createElement("button")
+      pageBtn.className = `btn pagination-btn ${pageNum === currentPage ? "btn-primary active" : "btn-outline"}`
+      pageBtn.textContent = pageNum
+      pageBtn.addEventListener("click", () => {
+        currentPage = pageNum
+        renderBrowseView()
+        scrollToTop()
+      })
+      paginationContainer.appendChild(pageBtn)
+    }
+  })
+
+  // Next button
+  const nextBtn = document.createElement("button")
+  nextBtn.className = `btn btn-outline pagination-btn ${currentPage === totalPages ? "disabled" : ""}`
+  nextBtn.innerHTML = 'Next <i class="fas fa-chevron-right"></i>'
+  nextBtn.disabled = currentPage === totalPages
+  nextBtn.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++
+      renderBrowseView()
+      scrollToTop()
+    }
+  })
+  paginationContainer.appendChild(nextBtn)
+
+  // Page info
+  const pageInfo = document.getElementById("page-info")
+  if (pageInfo) {
+    const startItem = (currentPage - 1) * itemsPerPage + 1
+    const endItem = Math.min(currentPage * itemsPerPage, totalFilteredUsers.length)
+    pageInfo.textContent = `Showing ${startItem}-${endItem} of ${totalFilteredUsers.length} users`
+  }
+}
+
+function generatePageNumbers(current, total) {
+  const pages = []
+  const maxVisible = 7
+
+  if (total <= maxVisible) {
+    for (let i = 1; i <= total; i++) {
+      pages.push(i)
+    }
+  } else {
+    pages.push(1)
+
+    if (current > 4) {
+      pages.push("...")
+    }
+
+    const start = Math.max(2, current - 2)
+    const end = Math.min(total - 1, current + 2)
+
+    for (let i = start; i <= end; i++) {
+      if (!pages.includes(i)) {
+        pages.push(i)
+      }
+    }
+
+    if (current < total - 3) {
+      pages.push("...")
+    }
+
+    if (!pages.includes(total)) {
+      pages.push(total)
+    }
+  }
+
+  return pages
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" })
 }
 
 function resetFiltersHandler() {
@@ -1107,6 +1978,7 @@ function resetFiltersHandler() {
   if (locationFilter) locationFilter.value = ""
   if (availabilityFilter) availabilityFilter.value = ""
 
+  currentPage = 1
   renderBrowseView()
 }
 
@@ -1122,7 +1994,7 @@ function openSwapModal(userId) {
   // Set modal title
   const modalTitle = document.getElementById("swap-modal-title")
   if (modalTitle) {
-    modalTitle.textContent = `Request Swap with ${user.name}`
+    modalTitle.textContent = "Skill Swap Request"
   }
 
   // Prepare modal content
@@ -1130,25 +2002,64 @@ function openSwapModal(userId) {
   if (!modalContent) return
 
   modalContent.innerHTML = `
-        <div class="swap-modal-details">
-            <div class="swap-modal-users">
-                <img src="${currentUser.profilePhoto}" alt="${currentUser.name}">
-                <div class="swap-modal-arrow"><i class="fas fa-exchange-alt"></i></div>
-                <img src="${user.profilePhoto}" alt="${user.name}">
-            </div>
-            <div class="swap-modal-skills">
-                <p>You offer <strong>${currentUser.offeredSkills[0] || "a skill"}</strong> in exchange for <strong>${user.offeredSkills[0] || "a skill"}</strong></p>
-            </div>
-            <div class="swap-modal-message">
-                <label for="swap-message">Message to ${user.name}:</label>
-                <textarea id="swap-message" placeholder="Explain what you'd like to learn/teach"></textarea>
-            </div>
-            <div class="swap-modal-actions">
-                <button class="btn btn-outline" id="cancel-swap-btn">Cancel</button>
-                <button class="btn btn-primary" id="send-swap-btn" data-user-id="${user.id}">Send Request</button>
-            </div>
+    <div class="swap-request-container">
+      <!-- Users Section -->
+      <div class="swap-users-section">
+        <div class="user-profile-card">
+          <img src="${currentUser.profilePhoto}" alt="${currentUser.name}">
+          <h3>${currentUser.name}</h3>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${currentUser.location || "Location not set"}</span>
+          </div>
         </div>
-    `
+        
+        <div class="swap-arrow-section">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        
+        <div class="user-profile-card">
+          <img src="${user.profilePhoto}" alt="${user.name}">
+          <h3>${user.name}</h3>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${user.location || "Location not set"}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Selection Section -->
+      <div class="skills-selection-section">
+        <div class="skill-selection-group">
+          <h4>Choose one of your offered skills:</h4>
+          <select id="offered-skill-select" class="skill-dropdown">
+            <option value="">Select a skill you offer...</option>
+            ${currentUser.offeredSkills.map((skill) => `<option value="${skill}">${skill}</option>`).join("")}
+          </select>
+        </div>
+        
+        <div class="skill-selection-group">
+          <h4>Choose one of their wanted skills:</h4>
+          <select id="wanted-skill-select" class="skill-dropdown">
+            <option value="">Select a skill they want...</option>
+            ${user.wantedSkills.map((skill) => `<option value="${skill}">${skill}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+
+      <!-- Message Section -->
+      <div class="message-section">
+        <label for="swap-message">Message to ${user.name}:</label>
+        <textarea id="swap-message" placeholder="Explain what you'd like to learn and teach, your availability, and any other details..."></textarea>
+      </div>
+
+      <!-- Actions Section -->
+      <div class="swap-actions-section">
+        <button class="btn btn-outline" id="cancel-swap-btn">Cancel</button>
+        <button class="btn btn-primary" id="send-swap-btn" data-user-id="${user.id}">Send Request</button>
+      </div>
+    </div>
+  `
 
   // Add event listeners
   const cancelSwapBtn = document.getElementById("cancel-swap-btn")
@@ -1159,23 +2070,39 @@ function openSwapModal(userId) {
   }
 
   if (sendSwapBtn) {
-    sendSwapBtn.addEventListener("click", sendSwapRequest)
+    sendSwapBtn.addEventListener("click", sendEnhancedSwapRequest)
   }
 
   openModal("swap")
 }
 
-function sendSwapRequest(e) {
+function sendEnhancedSwapRequest(e) {
   const userId = e.target.getAttribute("data-user-id")
   const messageTextarea = document.getElementById("swap-message")
-  const message = messageTextarea ? messageTextarea.value : ""
+  const offeredSkillSelect = document.getElementById("offered-skill-select")
+  const wantedSkillSelect = document.getElementById("wanted-skill-select")
+
+  const message = messageTextarea ? messageTextarea.value.trim() : ""
+  const offeredSkill = offeredSkillSelect ? offeredSkillSelect.value : ""
+  const wantedSkill = wantedSkillSelect ? wantedSkillSelect.value : ""
 
   if (!currentUser) return
 
-  // For demo, we'll just use the first offered/wanted skills
-  const offeredSkill = currentUser.offeredSkills[0] || "a skill"
-  const targetUser = users.find((u) => u.id === Number.parseInt(userId))
-  const wantedSkill = targetUser ? targetUser.offeredSkills[0] || "a skill" : "a skill"
+  // Validation
+  if (!offeredSkill) {
+    showToast("Please select a skill you offer", "warning")
+    return
+  }
+
+  if (!wantedSkill) {
+    showToast("Please select a skill they want", "warning")
+    return
+  }
+
+  if (!message) {
+    showToast("Please add a message to your request", "warning")
+    return
+  }
 
   // Create new swap request
   const newRequest = {
@@ -1208,7 +2135,7 @@ function renderSwapsView() {
     return
   }
 
-  // Show pending swaps by default
+  // Show pending tab by default
   switchSwapsTab("pending")
 }
 
@@ -1264,59 +2191,106 @@ function switchSwapsTab(tab) {
     const isCurrentUserSender = swap.fromUserId === currentUser.id
     const otherUser = isCurrentUserSender ? toUser : fromUser
 
-    const swapItem = document.createElement("div")
-    swapItem.className = `swap-item status-${swap.status}`
-    swapItem.innerHTML = `
-            <div class="swap-info">
-                <div class="swap-users">
-                    <img src="${fromUser.profilePhoto}" alt="${fromUser.name}">
-                    <div class="swap-arrow"><i class="fas fa-exchange-alt"></i></div>
-                    <img src="${toUser.profilePhoto}" alt="${toUser.name}">
-                </div>
-                <div class="swap-details">
-                    <p><strong>${fromUser.name}</strong> offers <span class="skill-tag offer">${swap.offeredSkill}</span></p>
-                    <p><strong>${toUser.name}</strong> wants <span class="skill-tag want">${swap.wantedSkill}</span></p>
-                    ${swap.message ? `<p class="swap-message">"${swap.message}"</p>` : ""}
-                    <p class="swap-date">${formatDate(swap.createdAt)}</p>
-                </div>
-            </div>
-            <div class="swap-status ${swap.status}">${swap.status.charAt(0).toUpperCase() + swap.status.slice(1)}</div>
-            <div class="swap-actions">
-                ${
-                  swap.status === "pending" && swap.toUserId === currentUser.id
-                    ? `
-                    <button class="btn btn-primary btn-small accept-swap-btn" data-swap-id="${swap.id}">Accept</button>
-                    <button class="btn btn-outline btn-small reject-swap-btn" data-swap-id="${swap.id}">Reject</button>
-                `
-                    : ""
-                }
-                ${
-                  swap.status === "pending" && swap.fromUserId === currentUser.id
-                    ? `
-                    <button class="btn btn-outline btn-small cancel-swap-btn" data-swap-id="${swap.id}">Cancel</button>
-                `
-                    : ""
-                }
-                ${
-                  swap.status === "accepted"
-                    ? `
-                    <button class="btn btn-primary btn-small complete-swap-btn" data-swap-id="${swap.id}">Mark Complete</button>
-                `
-                    : ""
-                }
-                ${
-                  swap.status === "completed" &&
-                  !ratings.some((r) => r.swapId === swap.id && r.fromUserId === currentUser.id)
-                    ? `
-                    <button class="btn btn-primary btn-small rate-swap-btn" data-swap-id="${swap.id}" data-user-id="${otherUser.id}">Rate Swap</button>
-                `
-                    : ""
-                }
-            </div>
+    const swapCard = document.createElement("div")
+    swapCard.className = `swap-status-card status-${swap.status}`
+    swapCard.innerHTML = `
+      <div class="swap-card-header">
+        <div class="swap-participants">
+          <img src="${fromUser.profilePhoto}" alt="${fromUser.name}">
+          <div class="swap-arrow"><i class="fas fa-exchange-alt"></i></div>
+          <img src="${toUser.profilePhoto}" alt="${toUser.name}">
+        </div>
+        <div class="swap-status-badge ${swap.status}">
+          ${swap.status.charAt(0).toUpperCase() + swap.status.slice(1)}
+        </div>
+      </div>
+
+      <div class="swap-details-section">
+        <div class="swap-skills-info">
+          <div class="skill-offer">
+            <strong>${fromUser.name}</strong> offers
+            <div class="skill-tag offer">${swap.offeredSkill}</div>
+          </div>
+          <div class="swap-arrow"><i class="fas fa-exchange-alt"></i></div>
+          <div class="skill-want">
+            <strong>${toUser.name}</strong> wants
+            <div class="skill-tag want">${swap.wantedSkill}</div>
+          </div>
+        </div>
+
+        ${swap.message ? `<div class="swap-message-preview">"${swap.message}"</div>` : ""}
+        
+        <div class="swap-date">
+          <i class="fas fa-calendar-alt"></i> ${formatDate(swap.createdAt)}
+        </div>
+      </div>
+
+      <div class="swap-actions-row">
+        ${
+          swap.status === "pending" && swap.toUserId === currentUser.id
+            ? `
+            <button class="btn btn-primary btn-small accept-swap-btn" data-swap-id="${swap.id}">Accept</button>
+            <button class="btn btn-outline btn-small reject-swap-btn" data-swap-id="${swap.id}">Reject</button>
         `
-    container.appendChild(swapItem)
+            : ""
+        }
+        ${
+          swap.status === "pending" && swap.fromUserId === currentUser.id
+            ? `
+            <button class="btn btn-outline btn-small cancel-swap-btn" data-swap-id="${swap.id}">Cancel</button>
+        `
+            : ""
+        }
+        ${
+          swap.status === "accepted"
+            ? `
+            <button class="btn btn-primary btn-small complete-swap-btn" data-swap-id="${swap.id}">Mark Complete</button>
+        `
+            : ""
+        }
+        ${
+          swap.status === "completed" && !ratings.some((r) => r.swapId === swap.id && r.fromUserId === currentUser.id)
+            ? `
+            <button class="btn btn-primary btn-small rate-swap-btn" data-swap-id="${swap.id}" data-user-id="${otherUser.id}">Rate Swap</button>
+        `
+            : ""
+        }
+      </div>
+    `
+    container.appendChild(swapCard)
   })
 
+  // Add pagination if there are many swaps
+  if (swaps.length > 5) {
+    addPagination(container, swaps, 5)
+  }
+
+  // Re-add event listeners for action buttons
+  addSwapActionListeners()
+}
+
+function addPagination(container, items, itemsPerPage) {
+  const totalPages = Math.ceil(items.length / itemsPerPage)
+
+  if (totalPages <= 1) return
+
+  const paginationContainer = document.createElement("div")
+  paginationContainer.className = "pagination-container"
+
+  paginationContainer.innerHTML = `
+    <button class="pagination-btn" id="prev-page" disabled>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span class="pagination-info">Page 1 of ${totalPages}</span>
+    <button class="pagination-btn" id="next-page" ${totalPages === 1 ? "disabled" : ""}>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  `
+
+  container.appendChild(paginationContainer)
+}
+
+function addSwapActionListeners() {
   // Add event listeners to action buttons
   document.querySelectorAll(".accept-swap-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -1364,21 +2338,31 @@ function acceptSwapRequest(swapId) {
   }
 }
 
-function rejectSwapRequest(swapId) {
-  const swapIndex = swapRequests.findIndex((s) => s.id === swapId)
-  if (swapIndex !== -1) {
-    swapRequests.splice(swapIndex, 1)
-    renderSwapsView()
-    showToast("Swap request rejected", "info")
-  }
-}
-
 function cancelSwapRequest(swapId) {
   const swapIndex = swapRequests.findIndex((s) => s.id === swapId)
   if (swapIndex !== -1) {
-    swapRequests.splice(swapIndex, 1)
-    renderSwapsView()
-    showToast("Swap request cancelled", "info")
+    const swap = swapRequests[swapIndex]
+
+    // Show confirmation dialog
+    if (confirm("Are you sure you want to cancel this swap request?")) {
+      swapRequests.splice(swapIndex, 1)
+      renderSwapsView()
+      showToast("Swap request cancelled successfully", "info")
+    }
+  }
+}
+
+function rejectSwapRequest(swapId) {
+  const swapIndex = swapRequests.findIndex((s) => s.id === swapId)
+  if (swapIndex !== -1) {
+    const swap = swapRequests[swapIndex]
+
+    // Show confirmation dialog
+    if (confirm("Are you sure you want to reject this swap request?")) {
+      swapRequests.splice(swapIndex, 1)
+      renderSwapsView()
+      showToast("Swap request rejected", "info")
+    }
   }
 }
 
