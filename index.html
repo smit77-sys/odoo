@@ -65,11 +65,22 @@
                 </ul>
             </nav>
             <div class="user-controls">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle-btn" class="btn btn-outline theme-toggle" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                
+                <!-- Login/Signup Buttons (shown when not logged in) -->
                 <button id="login-btn" class="btn btn-outline">Login</button>
                 <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+                
+                <!-- User Profile and Logout (shown when logged in) -->
                 <div id="user-profile-btn" style="display:none;" class="user-profile-container">
                     <img src="/placeholder.svg" alt="Profile" class="profile-pic-small">
                 </div>
+                <button id="logout-btn" style="display:none;" class="btn btn-outline">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </header>
 
@@ -114,7 +125,12 @@
             <section id="browse-view" class="content-view" style="display:none;">
                 <div class="search-filters">
                     <div class="search-bar">
-                        <input type="text" id="skill-search" placeholder="Search for skills...">
+                        <div class="search-input-container">
+                            <input type="text" id="skill-search" placeholder="Search for skills or users...">
+                            <div class="search-dropdown" id="search-dropdown">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
                         <button class="btn btn-primary" id="search-btn"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="filter-options">
@@ -191,6 +207,11 @@
                         <div class="profile-status">
                             <span class="status-badge" id="profile-status">Private</span>
                             <button class="btn btn-outline btn-small" id="toggle-status-btn">Make Public</button>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary btn-small" id="edit-profile-btn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -336,7 +357,7 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
                 <div class="auth-links">
-                    <a href="#" id="forgot-password-link">Forgot password?</a>
+                    <a href="#" id="forgot-password-link">Forgot username/password?</a>
                     <p>Don't have an account? <a href="#" id="show-signup-link">Sign up</a></p>
                 </div>
             </div>
@@ -392,9 +413,9 @@
 
         <!-- Swap Modal -->
         <div class="modal" id="swap-modal">
-            <div class="modal-content">
+            <div class="modal-content swap-modal-large">
                 <span class="close-modal">&times;</span>
-                <h2 id="swap-modal-title">Request Swap</h2>
+                <h2 id="swap-modal-title">Skill Swap Request</h2>
                 <div id="swap-modal-content">
                     <!-- Dynamically populated -->
                 </div>
@@ -408,6 +429,74 @@
                 <h2 id="rating-modal-title">Rate Your Swap Experience</h2>
                 <div id="rating-modal-content">
                     <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Forgot Password Modal -->
+        <div class="modal" id="forgot-password-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <h2>Reset Your Password</h2>
+                        <p>Enter your email address and we'll send you a reset link</p>
+                    </div>
+            
+                    <form id="forgot-password-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="forgot-email">Email Address</label>
+                            <input type="email" id="forgot-email" placeholder="Enter your email" required>
+                            <div id="forgot-email-error" class="error-message">Please enter a valid email</div>
+                        </div>
+                
+                        <button type="submit" class="auth-btn">Send Reset Link</button>
+                    </form>
+            
+                    <div class="auth-link">
+                        Remember your password? <a href="#" id="back-to-login-link">Back to Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
+        <div class="modal" id="edit-profile-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <h2>Edit Profile</h2>
+                        <p>Update your profile information</p>
+                    </div>
+            
+                    <form id="edit-profile-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="edit-name">Full Name</label>
+                            <input type="text" id="edit-name" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-email">Email Address</label>
+                            <input type="email" id="edit-email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-location">Location</label>
+                            <input type="text" id="edit-location" placeholder="Enter your location">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="edit-bio">Bio (Optional)</label>
+                            <textarea id="edit-bio" placeholder="Tell us about yourself..." rows="4"></textarea>
+                        </div>
+                
+                        <button type="submit" class="auth-btn">Save Changes</button>
+                    </form>
+            
+                    <div class="auth-link">
+                        <a href="#" id="cancel-edit-profile">Cancel</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -458,4 +547,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
